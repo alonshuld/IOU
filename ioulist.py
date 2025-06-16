@@ -19,7 +19,7 @@ class IOUList:
         self._iou_list: Dict[str, IOULog] = {}
     
 
-    def get_users(self, names: List[str] = []) -> Dict:
+    async def get_users(self, names: List[str] = []) -> Dict:
         """Get list of users
 
         :param names: Names of the users we want to get, if empty gets all the users
@@ -43,7 +43,7 @@ class IOUList:
 
 
 
-    def create_user(self, name: str) -> Dict:
+    async def create_user(self, name: str) -> Dict:
         """Create a new user
 
         :param name: new unique username
@@ -84,7 +84,7 @@ class IOUList:
         self._iou_list[name].balance = sum(self._iou_list[name].owed_by.values()) - sum(self._iou_list[name].owes.values())
     
 
-    def create_iou(self, lender: str, borrower: str, amount: float) -> Dict:
+    async def create_iou(self, lender: str, borrower: str, amount: float) -> Dict:
         """Create a IOU in the list
 
         :param lender: The name of the lender

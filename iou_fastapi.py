@@ -17,35 +17,35 @@ app = FastAPI()
 
 
 @app.get("/users")
-def get_users(users: Optional[List[str]] = Query(default=[])) -> Dict:
+async def get_users(users: Optional[List[str]] = Query(default=[])) -> Dict:
     """Get the users in the IOU list
 
     :param users: The users we want to get, if empty returns all the available users, defaults to []
     :return: Dictionary of the requested users
     """
     try:
-        result = iou_db.get_users(users)
+        result = await iou_db.get_users(users)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     return result
 
 
 @app.post("/add")
-def create_user(user: str) -> Dict:
+async def create_user(user: str) -> Dict:
     """Create a user in the IOU List
 
     :param user: Name of the new user
     :return: The object of the created user
     """
     try:
-        result = iou_db.create_user(user)
+        result = await iou_db.create_user(user)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     return result
 
 
 @app.post("/iou")
-def create_iou(lender: str, borrower: str, amount: float) -> Dict:
+async def create_iou(lender: str, borrower: str, amount: float) -> Dict:
     """Create an IOU
 
     :param lender: Name of the lender
@@ -54,7 +54,7 @@ def create_iou(lender: str, borrower: str, amount: float) -> Dict:
     :return: The updated users object
     """
     try:
-        result = iou_db.create_iou(lender, borrower, amount)
+        result = await iou_db.create_iou(lender, borrower, amount)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     return result
