@@ -11,6 +11,10 @@ from fastapi import FastAPI, Query, HTTPException
 from ioulist import IOUList
 
 
+USERS_KEY = "users"
+NOT_FOUND_ERROR = 404
+
+
 # Global Variables
 iou_db = IOUList()
 app = FastAPI()
@@ -26,8 +30,8 @@ async def get_users(users: Optional[List[str]] = Query(default=[])) -> Dict:
     try:
         result = await iou_db.get_users(users)
     except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
-    return result
+        raise HTTPException(status_code=NOT_FOUND_ERROR, detail=str(error))
+    return {USERS_KEY: result}
 
 
 @app.post("/add")
@@ -40,7 +44,7 @@ async def create_user(user: str) -> Dict:
     try:
         result = await iou_db.create_user(user)
     except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
+        raise HTTPException(status_code=NOT_FOUND_ERROR, detail=str(error))
     return result
 
 
@@ -56,5 +60,5 @@ async def create_iou(lender: str, borrower: str, amount: float) -> Dict:
     try:
         result = await iou_db.create_iou(lender, borrower, amount)
     except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
-    return result
+        raise HTTPException(status_code=NOT_FOUND_ERROR, detail=str(error))
+    return {USERS_KEY: result}
