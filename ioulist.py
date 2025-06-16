@@ -81,7 +81,7 @@ class IOUList:
 
         :param name: Name of the user we want to update
         """
-        self._iou_list[name].balance = sum(self._iou_list[name].owed_by.keys()) - sum(self._iou_list[name].owes.keys())
+        self._iou_list[name].balance = sum(self._iou_list[name].owed_by.values()) - sum(self._iou_list[name].owes.values())
     
 
     def create_iou(self, lender: str, borrower: str, amount: float) -> Dict:
