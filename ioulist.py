@@ -42,9 +42,11 @@ class IOUList:
         if name not in self._iou_list.keys():
             raise ValueError(f"{name} is not a user")
         
+        # Return dict
         ans = {}
         ans[NAME_KEY] = name
         ans.update(self._iou_list[name].model_dump())
+        
         return ans
 
 
@@ -69,27 +71,26 @@ class IOUList:
         # Validation checks
         if lender not in self._iou_list.keys():
             raise ValueError(f"{lender} is not a valid user")
-        
         if borrower not in self._iou_list.keys():
             raise ValueError(f"{borrower} is not a valid user")
-        
         if amount <= 0:
             raise ValueError("Amount should be greater than 0")
         
+        # Lender changes
         if borrower in self._iou_list[lender].owed_by.keys():
             self._iou_list[lender].owed_by[borrower] += amount
         else:
             self._iou_list[lender].owed_by[borrower] = amount
-        
         self.update_amount(lender)
 
+        # Borrower changes
         if lender in self._iou_list[borrower].owes.keys():
             self._iou_list[borrower].owes[lender] += amount
         else:
             self._iou_list[borrower].owes[lender] = amount
-        
         self.update_amount(borrower)
 
+        # Return dict
         ans = {}
         ans[USERS_KEY] = []
         for name in sorted([lender, borrower]):
