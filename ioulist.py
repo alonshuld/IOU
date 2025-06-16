@@ -6,7 +6,7 @@ This file implements an IOU list class
 """
 
 
-from typing import Dict
+from typing import Dict, List
 from ioulog import IOULog
 
 
@@ -17,6 +17,30 @@ USERS_KEY = "users"
 class IOUList:
     def __init__(self):
         self._iou_list: Dict[str, IOULog] = {}
+    
+
+    def get_users(self, names: List[str] = []) -> Dict:
+        """Get list of users
+
+        :param names: Names of the users we want to get, if empty gets all the users
+        :return: Dictionary of all the requested users
+        """
+        # If names is empty give all the available users
+        if len(names) == 0:
+            names = self._iou_list.keys()
+        
+        ans = {}
+        ans[USERS_KEY] = []
+
+        for name in names:
+            # Validation check
+            if name not in self._iou_list.keys():
+                raise ValueError(f"{name} is not a valid user")
+            
+            ans[USERS_KEY].append(self.get_user(name))
+
+        return ans
+
 
 
     def create_user(self, name: str) -> Dict:
@@ -25,6 +49,7 @@ class IOUList:
         :param name: new unique username
         :return: The created user object
         """
+        # Validation check
         if name in self._iou_list.keys():
             raise ValueError(f"{name} is already taken")
         
@@ -46,7 +71,7 @@ class IOUList:
         ans = {}
         ans[NAME_KEY] = name
         ans.update(self._iou_list[name].model_dump())
-        
+
         return ans
 
 
