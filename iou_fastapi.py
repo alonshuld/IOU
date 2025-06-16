@@ -6,8 +6,8 @@ This file lets the IOU work with FastApi
 """
 
 
-from typing import List, Dict
-from fastapi import FastAPI
+from typing import List, Dict, Optional
+from fastapi import FastAPI, Query
 from ioulist import IOUList
 
 
@@ -17,7 +17,7 @@ app = FastAPI()
 
 
 @app.get("/users")
-def get_users(users: List[str] = []) -> Dict:
+def get_users(users: Optional[List[str]] = Query(default=[])) -> Dict:
     """Get the users in the IOU list
 
     :param users: The users we want to get, if empty returns all the available users, defaults to []
@@ -37,7 +37,7 @@ def create_user(user: str) -> Dict:
 
 
 @app.post("/iou")
-def create_iou(lender: str, borrower: str, amount: float) -> float:
+def create_iou(lender: str, borrower: str, amount: float) -> Dict:
     """Create an IOU
 
     :param lender: Name of the lender
