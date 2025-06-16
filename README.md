@@ -1,11 +1,10 @@
 # IOU
 
-## RESTful API for tracking IOUs.
+## RESTful API for tracking IOUs
 
 ### API Specification
 
 #### User object
-
 
 ```json
 {
