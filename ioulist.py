@@ -18,6 +18,20 @@ class IOUList:
     def __init__(self):
         self._iou_list: Dict[str, IOULog] = {}
 
+
+    def create_user(self, name: str) -> Dict:
+        """Create a new user
+
+        :param name: new unique username
+        :return: The created user object
+        """
+        if name in self._iou_list.keys():
+            raise ValueError(f"{name} is already taken")
+        
+        self._iou_list[name] = IOULog()
+
+        return self.get_user(name)
+
     
     def get_user(self, name: str) -> Dict:
         """Gives a json formatted information about user

@@ -14,7 +14,6 @@ class IOULog(BaseModel):
     """
     IOU Log class
     """
-    name: str
-    owes: Dict[str, float]
-    owed_by: Dict[str, float]
-    balance: float
+    owes: Dict[str, float] = {}
+    owed_by: Dict[str, float] = {}
+    balance: float = 0
