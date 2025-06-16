@@ -7,7 +7,7 @@ This file lets the IOU work with FastApi
 
 
 from typing import List, Dict, Optional
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, HTTPException
 from ioulist import IOUList
 
 
@@ -23,7 +23,11 @@ def get_users(users: Optional[List[str]] = Query(default=[])) -> Dict:
     :param users: The users we want to get, if empty returns all the available users, defaults to []
     :return: Dictionary of the requested users
     """
-    return iou_db.get_users(users)
+    try:
+        result = iou_db.get_users(users)
+    except ValueError as error:
+        raise HTTPException(status_code=404, detail=str(error))
+    return result
 
 
 @app.post("/add")
@@ -33,7 +37,11 @@ def create_user(user: str) -> Dict:
     :param user: Name of the new user
     :return: The object of the created user
     """
-    return iou_db.create_user(user)
+    try:
+        result = iou_db.create_user(user)
+    except ValueError as error:
+        raise HTTPException(status_code=404, detail=str(error))
+    return result
 
 
 @app.post("/iou")
@@ -45,4 +53,8 @@ def create_iou(lender: str, borrower: str, amount: float) -> Dict:
     :param amount: amount of money that borrowed
     :return: The updated users object
     """
-    return iou_db.create_iou(lender, borrower, amount)
+    try:
+        result = iou_db.create_iou(lender, borrower, amount)
+    except ValueError as error:
+        raise HTTPException(status_code=404, detail=str(error))
+    return result
