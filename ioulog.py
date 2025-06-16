@@ -1,13 +1,13 @@
 # !/usr/bin/env python
 
 
-from pydantic import BaseModel
-from typing import Dict
-
-
 """
 This file implements an IOU log class
 """
+
+
+from pydantic import BaseModel
+from typing import Dict
 
 
 class IOULog(BaseModel):
