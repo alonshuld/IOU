@@ -32,7 +32,7 @@ class IOUList:
         answer = {}
         answer[USERS_KEY] = []
 
-        for name in names:
+        for name in sorted(names):
             answer[USERS_KEY].append(self.get_user(name))
 
         return answer
