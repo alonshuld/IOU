@@ -38,7 +38,6 @@ class IOUList:
         return answer
 
 
-
     async def create_user(self, name: str) -> Dict:
         """Create a new user
 
@@ -69,7 +68,6 @@ class IOUList:
         answer.update(self._iou_list[name].model_dump())
 
         return answer
-
 
     
     def update_amount(self, name: str):
