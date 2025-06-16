@@ -12,7 +12,7 @@ from typing import Dict
 
 class IOULog(BaseModel):
     """
-    IOU Log class
+    IOU Log that holds all the transactions
     """
     owes: Dict[str, float] = {}
     owed_by: Dict[str, float] = {}

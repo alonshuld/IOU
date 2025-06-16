@@ -14,6 +14,8 @@ NAME_KEY = "name"
 
 
 class IOUList:
+    """A list that holds all the users and their IOU logs
+    """
     def __init__(self):
         self._iou_list: Dict[str, IOULog] = {}
 
@@ -46,6 +48,16 @@ class IOUList:
         """
         if name not in self._iou_list:
             raise ValueError(f"{name} is not a valid user")
+    
+
+    def _is_name_taken(self, name: str) -> bool:
+        """Checks if the name is already taken
+
+        :param name: name
+        :return: True if the name is taken and False if not
+        """
+        if name in self._iou_list.keys():
+            raise ValueError(f"{name} is already taken")
     
 
     def _is_valid_amount(self, amount: float):
@@ -129,9 +141,7 @@ class IOUList:
         :param name: new unique username
         :return: The created user object
         """
-        # Validation check
-        if name in self._iou_list.keys():
-            raise ValueError(f"{name} is already taken")
+        self._is_name_taken(name)
         
         self._iou_list[name] = IOULog()
 
