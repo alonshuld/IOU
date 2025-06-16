@@ -29,17 +29,13 @@ class IOUList:
         if len(names) == 0:
             names = self._iou_list.keys()
         
-        ans = {}
-        ans[USERS_KEY] = []
+        answer = {}
+        answer[USERS_KEY] = []
 
         for name in names:
-            # Validation check
-            if name not in self._iou_list.keys():
-                raise ValueError(f"{name} is not a valid user")
-            
-            ans[USERS_KEY].append(self.get_user(name))
+            answer[USERS_KEY].append(self.get_user(name))
 
-        return ans
+        return answer
 
 
 
@@ -68,11 +64,11 @@ class IOUList:
             raise ValueError(f"{name} is not a user")
         
         # Return dict
-        ans = {}
-        ans[NAME_KEY] = name
-        ans.update(self._iou_list[name].model_dump())
+        answer = {}
+        answer[NAME_KEY] = name
+        answer.update(self._iou_list[name].model_dump())
 
-        return ans
+        return answer
 
 
     
@@ -116,9 +112,9 @@ class IOUList:
         self.update_amount(borrower)
 
         # Return dict
-        ans = {}
-        ans[USERS_KEY] = []
+        answer = {}
+        answer[USERS_KEY] = []
         for name in sorted([lender, borrower]):
-            ans[USERS_KEY].append(self.get_user(name))
+            answer[USERS_KEY].append(self.get_user(name))
 
-        return ans
+        return answer
