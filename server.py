@@ -22,7 +22,8 @@ app = FastAPI()
 
 @app.get("/users")
 async def get_users(users: Optional[List[str]] = Query(default=[])) -> Dict:
-    """Get the users in the IOU list
+    """
+    Get the users in the IOU list
 
     :param users: The users we want to get, if empty returns all the available users, defaults to []
     :return: Dictionary of the requested users
@@ -36,7 +37,8 @@ async def get_users(users: Optional[List[str]] = Query(default=[])) -> Dict:
 
 @app.post("/add")
 async def create_user(user: str) -> Dict:
-    """Create a user in the IOU List
+    """
+    Create a user in the IOU List
 
     :param user: Name of the new user
     :return: The object of the created user
@@ -50,7 +52,8 @@ async def create_user(user: str) -> Dict:
 
 @app.post("/iou")
 async def create_iou(lender: str, borrower: str, amount: float) -> Dict:
-    """Create an IOU
+    """
+    Create an IOU
 
     :param lender: Name of the lender
     :param borrower: Name of the borrower

@@ -17,3 +17,12 @@ class IOULog(BaseModel):
     owes: Dict[str, float] = {}
     owed_by: Dict[str, float] = {}
     balance: float = 0
+
+
+    def _update_amount(self):
+        """
+        Update the balance field
+
+        :param name: Name of the user we want to update
+        """
+        self.balance = sum(self.owed_by.values()) - sum(self.owes.values())
